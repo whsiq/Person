@@ -14,7 +14,7 @@ public class PersonGenerator {
         // Initializations
 
         Scanner in = new Scanner(System.in);
-        ArrayList<String> people = new ArrayList<>();
+        ArrayList<Person> people = new ArrayList<>();
         String id;
         String firstName;
         String lastName;
@@ -30,9 +30,10 @@ public class PersonGenerator {
             firstName = SafeInput.getNonZeroLenString(in, "Enter your first name");
             lastName = SafeInput.getNonZeroLenString(in, "Enter your last name");
             title = SafeInput.getRegExString(in, "Enter your title", "^(Dr|Mr|Mrs|Ms|Esq)\\b\\.");
-            YOB = SafeInput.getInt(in, "Enter your age");
+            YOB = SafeInput.getInt(in, "Enter your birth year");
             ynConfirm = SafeInput.getYNConfirm(in, "Do you have more entries to make?");
-            people.add(id + ", " + firstName + ", " + lastName + ", " + title + ", " + YOB);
+            Person P = new Person (firstName, lastName, id, title, YOB);
+            people.add(P);
 
         } while(ynConfirm);
 
@@ -46,9 +47,9 @@ public class PersonGenerator {
             OutputStream out = new BufferedOutputStream(Files.newOutputStream(file, CREATE));
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
 
-            for(String rec : people) {
+            for(Person rec : people) {
 
-                writer.write(rec, 0, rec.length()); // 0 represents the starting character on the write
+                writer.write(rec.toCSVDataRecord(), 0, rec.toCSVDataRecord().length()); // 0 represents the starting character on the write
                 writer.newLine();
 
             }

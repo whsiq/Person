@@ -15,6 +15,7 @@ public class PersonReader {
         File selectedFile;
         String rec;
         ArrayList<String> records = new ArrayList<>();
+        ArrayList<Person> people = new ArrayList<>();
 
         int length = 5;
         String id;
@@ -64,12 +65,16 @@ public class PersonReader {
                         lastName = fields[2].trim();
                         title = fields[3].trim();
                         birthYear = Integer.parseInt(fields[4].trim());
-                        System.out.printf("\n%-8s%-12s%-12s%-6s%6d", id, firstName, lastName, title, birthYear);
+                        Person p = new Person(firstName, lastName, id, title, birthYear);
+                        people.add(p);
                     }
                     else {
                         System.out.println("File may be corrupt: ");
                         System.out.println(l);
                     }
+                }
+                for (Person i : people) {
+                    System.out.printf("\n%-8s%-12s%-12s%-6s%6d", i.getID(), i.getFirstName(), i.getLastName(), i.getTitle(), i.getYOB());
                 }
 
             }
